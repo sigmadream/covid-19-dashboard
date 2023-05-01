@@ -7,5 +7,7 @@
     - 사용되는 패키지 중에서 v18 이상에서 약간의 오류가 발생할 수 있으니 가능하면 `v18`을 사용하세요.
 
 ## Google Sheets API 사용
-[Google Cloud](https://console.cloud.google.com)에서 인증관련 `json`을 다운로드 받아서 사용하세요.
+- [Google Cloud](https://console.cloud.google.com)에서 인증관련 `json`을 다운로드 후 진행해주세요.
+- `googlesheets` 폴더에서 `main.js`를 실행하시면 됩니다.
+
 
