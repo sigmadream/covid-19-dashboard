@@ -1,7 +1,10 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+
 const { sequelize } = require('./database')
+
 const globalStateController = require('./controller/global-stat.controller')
+const keyValueController = require('./controller/key-value.controller');
 
 async function launchServer() {
     const app = express()
@@ -13,6 +16,11 @@ async function launchServer() {
     app.get('/global-stats', globalStateController.getAll)
     app.post('/global-stats', globalStateController.insertOrUpdate)
     app.delete('/global-stats', globalStateController.remove)
+
+    app.get('/key-value/:key', keyValueController.get);
+    app.post('/key-value', keyValueController.insertOrUpdate);
+    app.delete('/key-value/:key', keyValueController.remove);
+
 
     try {
         await sequelize.sync()
@@ -27,4 +35,5 @@ async function launchServer() {
         console.log(`Server listening on port ${PORT}`)
     })
 }
+
 launchServer()
