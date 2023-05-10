@@ -41,11 +41,6 @@ module.exports = (sequelize) => {
         tableName: 'GlobalStat',
         indexes: [
             {
-                name: 'PRIMARY',
-                unique: true,
-                fields: [{ name: 'id' }]
-            },
-            {
                 name: 'ccWithDate',
                 unique: true,
                 fields: [{ name: 'cc' }, { name: 'date' }]
