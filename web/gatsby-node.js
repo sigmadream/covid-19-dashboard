@@ -1,18 +1,10 @@
-/**
- * Implement Gatsby's Node APIs in this file.
- *
- * See: https://www.gatsbyjs.com/docs/reference/config-files/gatsby-node/
- */
-
-/**
- * @type {import('gatsby').GatsbyNode['createPages']}
- */
 exports.createPages = async ({ actions }) => {
-  const { createPage } = actions
+  const { createPage } = actions;
+  const dataSource = { thirdSlideTitle: "예방 행동 수칙" }
+
   createPage({
-    path: "/using-dsg",
-    component: require.resolve("./src/templates/using-dsg.js"),
-    context: {},
-    defer: true,
-  })
-}
+    path: '/',
+    component: require.resolve('./src/templates/single-page.js'),
+    context: { dataSource },
+  });
+};
