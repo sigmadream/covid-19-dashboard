@@ -16,7 +16,7 @@ module.exports = (sequelize) => {
             type: DataTypes.DATEONLY,
             allowNull: false,
         },
-        confirm: {
+        confirmed: {
             type: DataTypes.INTEGER.UNSIGNED,
             allowNull: false,
         },
