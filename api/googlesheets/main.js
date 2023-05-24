@@ -7,7 +7,7 @@ async function main() {
         const downloader = new SheetDownloader(sheetApiClient);
 
         // https://docs.google.com/document/d/1bZbLi45kqRyE1fSBphWzFFKaJobcaMplBzr82rRXjPM/edit#
-        const spreadsheetId = '12aUiWttY1ay4lmjjgGCM21-q0vFiFq0mZA68P9E6SOA';
+        const spreadsheetId = '1kHjxBpkTN_6mmFbs4YzjgMbKYSaNxd_Z67PkGpX2k-0';
 
         const notice = await downloader.downloadToJson(
             spreadsheetId,

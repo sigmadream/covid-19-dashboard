@@ -7,14 +7,17 @@
     - 사용되는 패키지 중에서 v18 이상에서 약간의 오류가 발생할 수 있으니 가능하면 `v18`을 사용하세요.
 
 ## 실행방법
+### for `api`
 1. `npm install`을 사용해서 필요한 패키지를 설치해주세요.
-2. `node index.js`를 사용해서 데이터베이스 생성 및 서버(8080)를 실행해주세요.
-3. `googlesheets` 폴더에서 아래 과정을 진행
-    1. `node sheet_api_client_factory.js`를 실행해서 API를 인증해주세요.
-    2. `node main.js`를 실행해서 Google Sheets의 데이터를 JSON으로 변경해주세요.
+1. `googlesheets` 폴더에서 아래 과정을 진행
+    1. [Google Cloud](https://console.cloud.google.com)에서 인증관련 `json`을 다운로드 후 `credentials.json`으로 이름 변경
+    1. `googlesheets` 폴더에서 `main.js`를 실행하면, `accessToken.json`을 생성
+    1. `main.js` 파일에서 `spreadsheetId`를 수정
+    1. `node main.js`를 실행해서 Google Sheets의 데이터를 JSON으로 변경
+1. `node index.js`를 사용해서 데이터베이스 생성 및 서버(8080)를 실행해주세요.
 
-## Google Sheets API 사용
-- [Google Cloud](https://console.cloud.google.com)에서 인증관련 `json`을 다운로드 후 진행해주세요.
-- `googlesheets` 폴더에서 `main.js`를 실행하시면 됩니다.
+### for `web`
+1. `npm install`
+2. 
 
 
