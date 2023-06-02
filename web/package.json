@@ -29,13 +29,18 @@
     "react-scroll": "^1.8.9",
     "react-select": "^5.7.3"
   },
+  "overrides": {
+    "react-server-dom-webpack@0.0.0-experimental-c8b778b7f-20220825": {
+      "react": "^18.0.0"
+    }
+  },
   "devDependencies": {
     "prettier": "^2.8.8"
   },
   "keywords": [
     "gatsby"
   ],
-  "license": "0BSD",
+  "license": "MIT",
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",

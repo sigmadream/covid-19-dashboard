@@ -4,7 +4,7 @@
   "description": "코로나-19 대한민국 통계 API",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
   "author": "Sangkon Han",
   "license": "MIT",
