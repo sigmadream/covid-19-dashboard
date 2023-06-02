@@ -1,11 +1,12 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import { css } from '@emotion/react';
-
+import { Dashboard } from '../components/dashboard';
+import { Notice } from '../components/notice';
 
 export default function SinglePage({ pageContext }) {
   const { dataSource } = pageContext;
-  const { lastUpdated, globalStats } = dataSource;
+  const { lastUpdated, globalStats, notice } = dataSource;
   const lastUpdatedFormatted = new Date(lastUpdated).toLocaleDateString();
 
   return (
@@ -35,6 +36,8 @@ export default function SinglePage({ pageContext }) {
       <p className='text-center text-white'>
         마지막 업데이트 : {lastUpdatedFormatted}
       </p>
+      <Dashboard globalStats={globalStats} />
+      <Notice notice={notice} />
     </div>
   )
 }

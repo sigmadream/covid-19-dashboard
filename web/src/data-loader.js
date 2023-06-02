@@ -4,6 +4,7 @@ const _ = require('lodash');
 const ApiClient = require('./api-client');
 
 const countryInfo = require('../../api/googlesheets/downloaded/countryInfo.json');
+const notice = require('../../api/googlesheets/downloaded/notice.json');
 
 async function getDataSource() {
     const countryByCC = _.keyBy(countryInfo, 'cc');
@@ -17,6 +18,7 @@ async function getDataSource() {
         lastUpdated: Date.now(),
         globalStats,
         countryByCC,
+        notice: notice.filter((x) => !x.hidden)
     };
 }
 
