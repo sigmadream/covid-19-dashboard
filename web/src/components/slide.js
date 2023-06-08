@@ -1,13 +1,13 @@
 import React from 'react';
 import { css } from '@emotion/react';
-
+import { Container } from 'react-bootstrap';
 
 export function Slide(props) {
-    const { title, children, id } = props;
-    return (
-        <div
-            id={id}
-            css={css`
+  const { title, children, id } = props;
+  return (
+    <div
+      id={id}
+      css={css`
         text-align: center;
         border-bottom: 1px solid #aaa;
         padding-top: 40px;
@@ -16,11 +16,11 @@ export function Slide(props) {
           margin-bottom: 24px;
         }
       `}
-        >
-            <div>
-                <h2>{title}</h2>
-                <div>{children}</div>
-            </div>
-        </div>
-    );
+    >
+      <Container>
+        <h2>{title}</h2>
+        <div>{children}</div>
+      </Container>
+    </div>
+  );
 }
