@@ -1,6 +1,8 @@
 const { subDays } = require('date-fns');
 const { format, utcToZonedTime } = require('date-fns-tz');
 const _ = require('lodash');
+const path = require('path');
+const fs = require('fs-extra');
 const ApiClient = require('./api-client');
 
 const countryInfo = require('../../api/googlesheets/downloaded/countryInfo.json');
@@ -12,8 +14,15 @@ async function getDataSource() {
     
     const allGlobalStats = await apiClient.getAllGlobalStats();
     const groupedByDate = _.groupBy(allGlobalStats.globalStats, 'date');
-    const globalStats = generateGlobalStats(groupedByDate);
 
+    const globalStats = generateGlobalStats(groupedByDate);
+    const globalChartDataByCc = generateGlobalChartDataByCc(groupedByDate);
+
+    Object.keys(globalChartDataByCc).forEach((cc) => {
+        const genPath = path.join(process.cwd(), `static/generated/${cc}.json`);
+        fs.outputFileSync(genPath, JSON.stringify(globalChartDataByCc[cc]));
+      });
+    
     return {
         lastUpdated: Date.now(),
         globalStats,
@@ -62,6 +71,80 @@ function createGlobalStatWithPrevField(todayStats, yesterdayStats) {
 
     return globalStatWithPrev;
 }
+
+function generateGlobalChartDataByCc(groupedByDate) {
+    const chartDataByCc = {};
+    const dates = Object.keys(groupedByDate).sort();
+    for (const date of dates) {
+        const countriesDataForOneDay = groupedByDate[date];
+        for (const countryData of countriesDataForOneDay) {
+            const cc = countryData.cc;
+            if (!chartDataByCc[cc]) {
+                chartDataByCc[cc] = {
+                    date: [],
+                    confirmed: [],
+                    confirmedAcc: [],
+                    death: [],
+                    deathAcc: [],
+                    released: [],
+                    releasedAcc: [],
+                };
+            }
+            appendToChartData(chartDataByCc[cc], countryData, date);
+        }
+  
+        if (!chartDataByCc['global']) {
+            chartDataByCc['global'] = {
+                date: [],
+                confirmed: [],
+                confirmedAcc: [],
+                death: [],
+                deathAcc: [],
+                released: [],
+                releasedAcc: [],
+            };
+        }
+  
+        const countryDataSum = countriesDataForOneDay.reduce(
+            (sum, x) => ({
+                confirmed: sum.confirmed + x.confirmed,
+                death: sum.death + x.death,
+                released: sum.released + (x.released || 0), // release 데이터가 없는 국가들이 존재
+            }),
+            { confirmed: 0, death: 0, released: 0 },
+        );
+        appendToChartData(chartDataByCc['global'], countryDataSum, date);
+    }
+    return chartDataByCc;
+}
+
+function appendToChartData(chartData, countryData, date) {
+    if (chartData.date.length === 0) {
+      chartData.confirmed.push(countryData.confirmed);
+      chartData.death.push(countryData.death);
+      chartData.released.push(countryData.released);
+    } else {
+      const confirmedIncrement =
+        countryData.confirmed - _.last(chartData.confirmedAcc) || 0;
+      chartData.confirmed.push(confirmedIncrement);
+  
+      const deathIncrement = countryData.death - _.last(chartData.deathAcc) || 0;
+      chartData.death.push(deathIncrement);
+  
+      const releasedIncrement =
+        countryData.released - _.last(chartData.releasedAcc) || 0;
+      chartData.released.push(releasedIncrement);
+    }
+  
+    chartData.confirmedAcc.push(countryData.confirmed);
+    chartData.deathAcc.push(countryData.death);
+    chartData.releasedAcc.push(countryData.released);
+  
+    chartData.date.push(date);
+}
+  
+
+
 
 module.exports = {
     getDataSource
